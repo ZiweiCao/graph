@@ -1,0 +1,17 @@
+def find_path(G, i, j):
+    path={}
+    path[i]=0
+    results=[]
+    l=[]
+    l.append(i)
+    while len(l)>0:
+        temp=l[0]
+        del l[0]
+        for neighbor in G[temp].keys():
+            if neighbor not in path:
+                path[neighbor]=path[temp]+G[temp][neighbor]
+                if neighbor==j:results.append(path[j])
+                else:l.append(neighbor)
+    return max(results)
+            
+            
