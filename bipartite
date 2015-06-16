@@ -1,0 +1,62 @@
+#
+# Write a function, `bipartite` that
+# takes as input a graph, `G` and tries
+# to divide G into two sets where 
+# there are no edges between elements of the
+# the same set - only between elements in
+# different sets.
+# If two sets exists, return one of them
+# or `None` otherwise
+# Assume G is connected
+#
+#Use BFS without recursion
+#test bipartite:two colored&linked nodes have different color  (no odd circuit) 
+def bipartite(G):
+    # your code here
+    # return a set
+    even={}
+    odd={}
+    nodes=G.keys()
+    start=nodes[0]
+    even[start]=0
+    l=[start]
+    while len(l)>0:
+        temp=l[0]
+        del l[0]
+        if temp in even:
+           for e in G[temp].keys():
+               if e not in odd:
+                    if e not in even:
+                       odd[e]=1
+                       l.append(e)
+                    else:return None
+        if temp in odd:
+           for e in G[temp].keys():
+               if e not in even:
+                    if e not in odd:
+                       even[e]=0
+                       l.append(e)
+                    else:return None           
+    return set(even.keys())     
+         
+
+
+########
+#
+# 
+def make_link(G, node1, node2, weight=1):
+    if node1 not in G:
+        G[node1] = {}
+    (G[node1])[node2] = weight
+    if node2 not in G:
+        G[node2] = {}
+    (G[node2])[node1] = weight
+    return G
+#edges = [(1, 2), (2, 3), (1, 4), (2, 5),
+#           (3, 8), (5, 6)]
+#G = {}
+#for n1, n2 in edges:
+#    make_link(G, n1, n2)
+#print G
+#print G.keys()
+#print bipartite(G)  
